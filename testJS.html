@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        .form-group { margin-bottom: 15px; }
+        .card{ border: 1px solid #ccc; padding: 15px; border-radius: 8px; margin-top: 10px; }
+        .highlight { background-color: #fff3cd; border-color: #ffeeba; }
+        .text-danger { color: red; }
+    </style>
+</head>
+<body>
+    <h2>ฟอร์มลงทะเบียนสมาชิก (Registration Form)</h2>
+
+    <form id="regForm">
+        <div class="form-group">
+            <label>ชื่อ-นามสกุล:</label>
+            <input type="text" id="fullname" class="input-field" placeholder="กรอกชื่อ-นามสกุล">
+            <span id="nameError" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label>แผนก/สาขา:</label>
+            <select id="department" class="input-field">
+                <option value="">-- เลือกแผนก --</option>
+                <option value="IT">เทคโนโลยีสารสนเทศ</option>
+                <option value="MKT">การตลาด</option>
+                <option value="HR">ทรัพยากรบุคคล</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>ระดับประสบการณ์:</label><br>
+            <input type="radio" name="level" value="Junior" class="user-level">Junior
+            <input type="radio" name="level" value="Senior" class="user-level">Senior
+        </div>
+
+        <div class="form-group">
+            <label>ทักษะความสามารถ(เลือกได้มากกว่า 1):</label><br>
+            <input type="checkbox" name="skills"value="HTML/CSS"> HTML/CSS
+            <input type="checkbox" name="skills" value="JavaScript">JavaScript
+            <input type="checkbox" name="skills"value="Database"> Database
+        </div>
+
+        <div class="form-group">
+            <label>โปรไฟล์รูปภาพ (URL):</label>
+            <input type="text" id="avatarUrl"placeholder="วางลิงกร์ูปภาพที่นี่">
+        </div>
+
+        <button type="button" id="btnPreview">ดูตัวอย่างข้อมูล</button>
+        <button type="submit" id="btnSubmit">ลงทะเบียน</button>
+
+    </form>
+
+    <hr>
+
+    <h3>พื้นที่แสดงผล (Preview Area)</h3>
+    <div id="previewCard" class="card">
+        <img id="avatarImg" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTy3H4VtQxL-Eavb96KhgeMpvzWrVIRrXx4uzU6oumfIg&s=10" alt="Profile" width="100">
+        <h4 id="dispName">ชื่อ: -</h4>
+        <p id="dispDept">แผนก: -</p>
+        <p id="dispDetails">รายละเอียด: -</p>
+        <div id="jsonResult"></div>
+    </div>
+
+    <!-- เขียน JavaScript ไว้ด้านล่างสุด -->
+    <script>
+        // วิธีที่ 1 -document.getElementById():
+        const btnPreview = document.getElementById('btnPreview');
+        console.log(btnPreview);
+        // วิธีที่ 2 -document.getElementsByClassName(): 
+        const inputFields = document.getElementsByClassName('input-field');
+        console.log(inputFields);
+        // วิธีที่ 3  -document.querySelector():
+        const radioButton = document.querySelector('input[name="level"]');
+        console.log(radioButton);
+        // วิธีที่ 4  -document.querySelectorAll():
+        const Checkbox = document.querySelectorAll('input[name="skills"]');
+        Checkbox.forEach(check => {
+            console.log(check.value);
+        });
+        // 3.1.1 onclick
+        const btnPreviewClick = document.getElementById('btnPreview');
+        btnPreviewClick.onclick = function() {
+            alert('กำลังประมวลผล...');
+        };
+        // 3.1.2 onchange
+        const departmentSelect = document.getElementById('department');
+        departmentSelect.onchange = function() {
+            console.log(departmentSelect.value);
+        };
+        // 3.1.3 onkeyup
+        const fullnameInput = document.getElementById('fullname');
+        const keyupError = document.getElementById('nameError');
+        fullnameInput.onkeyup = function() {
+            if (fullnameInput.value.length < 3) {
+                keyupError.textContent = "ชื่อต้องยาวอย่างน้อย 3 ตัวอักษร";
+            } else {
+                keyupError.textContent = "";
+            }
+        };
+        // 3.1.4 onmouseover , onmouseout
+        const previewCard = document.getElementById('previewCard');
+        previewCard.onmouseover = function() {
+            previewCard.style.backgroundColor = '#fff3cd';
+        };
+        previewCard.onmouseout = function() {
+            previewCard.style.backgroundColor = '';
+        };
+        // 3.2 การใช้addEventListener และตัวแปรevent (event object)
+        const regForm = document.getElementById('regForm');
+        regForm.addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            console.log("Event Type:", event.type);
+            console.log("Target Element:", event.target);
+        });
+        // 4.1.1
+        const fullname = document.getElementById('fullname');
+        const dispName = document.getElementById('dispName');
+        fullname.addEventListener('input', function() {
+            dispName.textContent = "ชื่อ: " + fullname.value;
+        });
+
+        function testCompare() {
+            const dispName = document.getElementById('dispName');
+            
+            // dispName.textContent = "ชื่อ: <span style='display:none'>ซ่อนไว้</span> <b>สมชาย</b>";
+            // console.log("textContent Output:", dispName.textContent);
+
+            // dispName.innerText = "ชื่อ: <span style='display:none'>ซ่อนไว้</span> <b>สมชาย</b>";
+            // console.log("innerText Output:", dispName.innerText);
+
+            dispName.innerHTML = "ชื่อ: <span style='color:green'>สมชาย</span> <b>สายลุย</b>";
+            console.log("innerHTML Output:", dispName.innerHTML);
+        }
+        testCompare();
+        // 4.1.2
+        const dispDetails = document.getElementById('dispDetails');
+        function SkillsList(skillsArray) {
+            if (skillsArray.length === 0) {
+                dispDetails.innerHTML = "รายละเอียด: -";
+                return;
+            }
+            let listItems = skillsArray.map(skill => `<li>${skill}</li>`).join('');
+            dispDetails.innerHTML = `รายละเอียด: <ul>${listItems}</ul>`;
+        }
+        function updateSkills() {
+            const checkedBoxes = document.querySelectorAll('input[name="skills"]:checked');
+            const selectedSkills = Array.from(checkedBoxes).map(cb => cb.value);
+            SkillsList(selectedSkills);
+        }
+
+        document.querySelectorAll('input[name="skills"]').forEach(checkbox => {
+            checkbox.addEventListener('change', updateSkills);
+        });
+        // อัปเดตแผนกใน preview area
+        const dispDept = document.getElementById('dispDept');
+        departmentSelect.addEventListener('change', function() {
+            const selectedText = departmentSelect.options[departmentSelect.selectedIndex].text;
+            if (departmentSelect.value === "") {
+                dispDept.textContent = "แผนก: -";
+            } else {
+                dispDept.textContent = "แผนก: " + selectedText;
+            }
+        });
+        // 4.2
+        const avatarUrlInput = document.getElementById('avatarUrl');
+        const avatarImg = document.getElementById('avatarImg');
+
+        avatarUrlInput.addEventListener('input', function() {
+            const oldUrl = avatarImg.getAttribute('src');
+            console.log("URL รูปเดิม:", oldUrl);
+
+            const newUrl = avatarUrlInput.value;
+
+            if (newUrl.trim() !== "") {
+                avatarImg.setAttribute('src', newUrl);
+            }
+        });
+        // WorkShop
+        const form = document.getElementById('regForm');
+        const nameError = document.getElementById('nameError');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const fullnameVal = document.getElementById('fullname').value.trim();
+            const departmentVal = document.getElementById('department').value;
+            // ตรวจสอบ Validation
+            if (fullnameVal === "" || departmentVal === "") {
+                console.warn("กรุณากรอกชื่อและเลือกแผนกให้ครบถ้วน!");
+                
+                if (nameError) {
+                    nameError.textContent = "กรุณากรอกชื่อ-นามสกุล และเลือกแผนกก่อนลงทะเบียน!";
+                }
+                alert("กรุณากรอกชื่อ-นามสกุล และเลือกแผนกก่อนลงทะเบียน!");
+                return;
+            }
+
+            if (nameError) nameError.textContent = "";
+            // รวบรวมข้อมูลอื่นๆจาก form
+            const checkedLevel = document.querySelector('input[name="level"]:checked');
+            const levelVal = checkedLevel ? checkedLevel.value : "";
+            const checkedSkills = document.querySelectorAll('input[name="skills"]:checked');
+            const skillsArray = Array.from(checkedSkills).map(cb => cb.value);
+            const avatarVal = document.getElementById('avatarUrl').value;
+            // นำข้อมูลทั้งหมดจัดเก็บใส่ Object
+            const userData = {
+                fullname: fullnameVal,
+                department: departmentVal,
+                level: levelVal,
+                skills: skillsArray,
+                avatar: avatarVal
+            };
+            // แสดงข้อมูล
+            console.log("=== ข้อมูลผู้สมัคร (userData) ===");
+            console.log(userData);
+        });
+
+    </script>
+ 
+</body>
+</html>
