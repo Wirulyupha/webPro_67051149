@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>67051149-Midterm</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Smart Event Hub</h1>
+        <nav>
+            <button type="button">🌙 Dark Mode</button>
+            <button type="button">+ เพิ่มกิจกรรมใหม่</button>
+        </nav>
+    </header>
+
+    <hr>
+
+    <main>
+        <aside>
+            <h2>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjmOJVh_E2Hwfrwo_JlknBzq_PbK55SAPn4U-ZS_romA&s=10" alt="stat-icon" width="30">
+                สถิติภาพรวม
+            </h2>
+            <p>กิจกรรมทั้งหมด: 0</p>
+            <p>ลงทะเบียนแล้ว: 0</p>
+            <p>ที่นั่งว่างรวม: 0</p>
+        </aside>
+
+        <section aria-labelledby="search-heading">
+            <h2>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUyeQgsVbqP5jKGG4RxJkEWOZpBLgKbHDVG3kreyotaA&s=10" alt="find-icon" width="30">
+                ค้นหาและกรองข้อมูล
+            </h2>
+            <form id="searchForm">
+                <div class="form-group">
+                    <label for="search-input">ค้นหากิจกรรม / วิทยากร: </label>
+                    <input type="text" id="search-input" class="input-field" placeholder="พิมพ์คำค้นหา...">
+                    <span id="searchError" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="activity">ประเภทกิจกรรม: </label>
+                    <select id="activity" class="input-field">
+                        <option value="">-- เลือกกิจกรรม --</option>
+                        <option value="BU">Business</option>
+                        <option value="Tech">Technology</option>
+                        <option value="DS">Design</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="sort">เรียงลำดับตาม: </label>
+                    <select id="sort" class="input-field">
+                        <option value="">-- เลือกวันที่ --</option>
+                        <option value="Low-High">วันที่(น้อยไปมาก)</option>
+                        <option value="High-Low">วันที่(มากไปน้อย)</option>
+                    </select>
+                </div>
+
+                <button type="reset">
+                    <img src="https://static.vecteezy.com/system/resources/thumbnails/045/822/338/small/refresh-icon-reload-icon-rotation-arrows-symbol-3d-icon-illustration-png.png" alt="reset-icon" width="20">
+                    คืนค่าข้อมูลเริ่มต้น
+                </button>
+            </form>
+        </section>
+
+        <section aria-labelledby="admin-heading">
+            <h2>รายการกิจกรรมและเวิร์กช็อป</h2>
+
+            <div id="eventsContainer" class="events-grid"></div>
+            <h3>เพิ่มกิจกรรมใหม่ (Admin Only)</h3>
+            <button type="button">x</button>
+            <form id="adminForm">
+                <div class="form-group">
+                    <label for="name-input">ชื่อกิจกรรม*</label>
+                    <input type="text" id="name-input" class="input-field" required>
+                    <span id="nameError" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="event-type">ประเภท*</label>
+                    <select id="event-type" class="input-field" required>
+                        <option value="">-- เลือกกิจกรรม --</option>
+                        <option value="BU">Business</option>
+                        <option value="Tech">Technology</option>
+                        <option value="DS">Design</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="speaker-input">วิทยากร*</label>
+                    <input type="text" id="speaker-input" class="input-field" required>
+                    <span id="speakerError" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="event-date">วันที่จัดงาน*</label>
+                    <input type="date" id="event-date" class="input-field" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="event-seats">จำนวนที่นั่งเปิดรับ*</label>
+                    <input type="text" id="event-seats" class="input-field" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="event-description">รายละเอียดกิจกรรม*</label>
+                    <textarea id="event-description" rows="4" cols="20" required></textarea>
+                </div>
+
+                <button type="button">ยกเลิก</button>
+                <button type="submit">บันทึกกิจกรรม</button>
+            </form>
+        </section>
+    </main>
+
+    <hr>
+
+    <footer>
+        <p>&copy; 2026 CS Midterm Examination - Web Programming</p>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

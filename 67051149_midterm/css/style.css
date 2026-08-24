@@ -1,0 +1,240 @@
+:root {
+    --bg-color: whitesmoke;
+    --card-bg: white;
+    --text-color: black;
+    --text-muted: gray;
+    --primary-color: royalblue;
+    --primary-hover: blue;
+    --secondary-color: dimgray;
+    --danger-color: crimson;
+    --danger-hover: darkred;
+    --border-color: lightgray;
+    --radius: 8px;
+    --font-base: 16px;
+    --transition: all 0.3s ease;
+}
+
+body.dark-mode {
+    --bg-color: black;     
+    --card-bg: rgb(42, 48, 48); 
+    --text-color: white;         
+    --text-muted: lightgray;      
+    --border-color: gray;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: var(--font-base);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: var(--transition);
+    line-height: 1.5;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    margin-bottom: 15px;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+button {
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: var(--radius);
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+nav button:first-child {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+nav button:last-child {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+button:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+button:focus-visible {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+button[type="reset"] {
+    background-color: var(--danger-color);
+    color: white;
+    width: 100%;
+    margin-top: 10px;
+}
+
+button[type="reset"]:hover {
+    background-color: var(--danger-hover);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 15px;
+}
+
+label {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.input-field, 
+input[type="text"], 
+input[type="date"], 
+select, 
+textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    font-size: 0.95rem;
+    transition: var(--transition);
+}
+
+.input-field:focus, 
+input:focus, 
+select:focus, 
+textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+aside, section {
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+    transition: var(--transition);
+}
+
+aside h2, section h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.25rem;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--primary-color);
+    margin-bottom: 15px;
+}
+
+aside p {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.events-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.event-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: 16px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.event-card h3 {
+    color: var(--primary-color);
+    font-size: 1.15rem;
+}
+
+.event-card p {
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+.reg-btn {
+    background-color: var(--primary-color);
+    color: white;
+    margin-top: 8px;
+    width: 100%;
+}
+
+.reg-btn:hover {
+    background-color: var(--primary-hover);
+}
+
+.reg-btn:disabled {
+    background-color: var(--secondary-color);
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+@media (min-width: 992px) {
+    main {
+        display: grid;
+        grid-template-columns: 320px 1fr; 
+        align-items: start;
+        gap: 24px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .events-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+footer {
+    text-align: center;
+    padding: 20px 0;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
